@@ -32,8 +32,8 @@ public class SignupUserUseCase {
             }
 
             User user = new UserFactory()
-                .signupParams(params)
-                .create();
+                .withSignupParams(params)
+                .build();
     
             return userRepository.save(user);
         } catch (Error e) {

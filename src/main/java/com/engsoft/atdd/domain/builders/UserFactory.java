@@ -8,13 +8,13 @@ public class UserFactory {
 
 	private User user;
 	
-    public UserFactory signupParams(SignupUserCreateDto params) {
+    public UserFactory withSignupParams(SignupUserCreateDto params) {
         Email emailObj = Email.fromString(params.getEmail());
-        this.user = new User(params.getName(), emailObj, params.getPassword());        
+        this.user = new User(params.getName(), emailObj, params.getPassword());    
         return this;
     }
     
-    public User create() {
+    public User build() {
     	return this.user;
     }
 	

@@ -1,55 +1,48 @@
 package com.engsoft.atdd.domain.models;
 
-import com.engsoft.atdd.domain.models.valueobjects.Email;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
 
-@Entity
-@Table(name = "\"user\"")
-public class User {
-
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+@Entity(name = "\"course\"")
+public class Course {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
 
-	@Embedded
-    @Column(unique = true)
-    private Email email;
-
-	private String password; // TODO: encrypt password before persist in databse.
+    private String description;
 
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private Plan plan;
-	
-    public User(Long id, String name, Email email, String password) {
+
+    public Course(Long id, String name, String description, Plan plan) {
         super();
         this.id = id;
         this.name = name;
-        this.email = email;
-        this.password = password;
+        this.description = description;
+        this.plan = plan;
     }
 
-    public User(String name, Email email, String password) {
+    public Course(String name, String description, Plan plan) {
         super();
         this.name = name;
-        this.email = email;
-        this.password = password;
+        this.description = description;
+        this.plan = plan;
     }
-
-    public User() { }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -60,20 +53,12 @@ public class User {
         this.name = name;
     }
 
-    public Email getEmail() {
-        return email;
+    public String getDescription() {
+        return description;
     }
 
-    public void setEmail(Email email) {
-        this.email = email;
-    }
-    
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Plan getPlan() {
@@ -90,8 +75,7 @@ public class User {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         result = prime * result + ((name == null) ? 0 : name.hashCode());
-        result = prime * result + ((email == null) ? 0 : email.hashCode());
-        result = prime * result + ((password == null) ? 0 : password.hashCode());
+        result = prime * result + ((description == null) ? 0 : description.hashCode());
         result = prime * result + ((plan == null) ? 0 : plan.hashCode());
         return result;
     }
@@ -104,7 +88,7 @@ public class User {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        User other = (User) obj;
+        Course other = (Course) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -115,15 +99,10 @@ public class User {
                 return false;
         } else if (!name.equals(other.name))
             return false;
-        if (email == null) {
-            if (other.email != null)
+        if (description == null) {
+            if (other.description != null)
                 return false;
-        } else if (!email.equals(other.email))
-            return false;
-        if (password == null) {
-            if (other.password != null)
-                return false;
-        } else if (!password.equals(other.password))
+        } else if (!description.equals(other.description))
             return false;
         if (plan == null) {
             if (other.plan != null)
@@ -132,5 +111,5 @@ public class User {
             return false;
         return true;
     }
-    
+
 }
