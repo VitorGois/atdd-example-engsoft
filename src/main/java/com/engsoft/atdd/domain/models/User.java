@@ -4,8 +4,6 @@ import java.util.Objects;
 
 import com.engsoft.atdd.domain.models.valueobjects.Email;
 
-import jakarta.persistence.AttributeOverride;
-import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -9,12 +9,12 @@ public class UserFactory {
 	private User user;
 	
     public UserFactory signupParams(SignupUserCreateDto params) {
-        Email emailObj = Email.deString(params.getEmail());
+        Email emailObj = Email.fromString(params.getEmail());
         this.user = new User(params.getName(), emailObj, params.getPassword());        
         return this;
     }
     
-    public User criar() {
+    public User create() {
     	return this.user;
     }
 	

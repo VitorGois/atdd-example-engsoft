@@ -33,12 +33,9 @@ public class SignupController {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
 		} catch (BadRequestException e) {
 			return ResponseEntity.badRequest().body("Bad request: " + e.getMessage());
+		} catch (Error e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
 		}
-	}
-	
-	@ExceptionHandler
-	public ResponseEntity<String> handleException(Exception e) {
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal server error");
 	}
 
 }

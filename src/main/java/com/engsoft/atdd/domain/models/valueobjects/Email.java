@@ -21,8 +21,8 @@ public class Email {
     
     public Email() { }
 
-    public static Email deString(String email) {
-    	validaEmail(email);
+    public static Email fromString(String email) {
+    	validate(email);
         return new Email(email);
     }
 
@@ -30,7 +30,7 @@ public class Email {
         return value;
     }
 
-    private static void validaEmail(String email) {
+    private static void validate(String email) {
         Matcher matcher = EMAIL_PATTERN.matcher(email);
         if (!matcher.matches()) {
             throw new IllegalArgumentException("formato de e-mail inválido");

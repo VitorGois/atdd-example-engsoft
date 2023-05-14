@@ -10,7 +10,6 @@ import com.engsoft.atdd.domain.validators.PasswordValidator;
 import com.engsoft.atdd.infraestructure.controllers.dtos.SignupUserCreateDto;
 import com.engsoft.atdd.infraestructure.exceptions.BadRequestException;
 import com.engsoft.atdd.infraestructure.exceptions.EmailAlreadyExistsException;
-import com.engsoft.atdd.infraestructure.exceptions.NotFoundException;
 import com.engsoft.atdd.infraestructure.repositories.UserRepository;
 
 @Service
@@ -32,13 +31,16 @@ public class SignupUserUseCase {
         }
         
         try {
-        	userRepository.findByEmail(email);
-        	throw new EmailAlreadyExistsException("email already exists");
-        } catch (NotFoundException e) {
+        	User alreadyUser = userRepository.findByEmail(email);
+
+            if (alreadyUser != null) {
+                throw new EmailAlreadyExistsException("email already exists");
+            }
+
             User user = new UserFactory()
-            		.signupParams(params)
-            		.criar();
-            
+                .signupParams(params)
+                .create();
+    
             return userRepository.save(user);
         } catch (Error e) {
         	throw e;
