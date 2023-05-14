@@ -37,7 +37,7 @@ public class SignupUserUseCaseTest {
 
         // Mock the behavior of UserRepository
         when(userRepository.findByEmail(anyString())).thenReturn(null);
-        when(userRepository.save(any(User.class))).thenReturn(new User(name, Email.fromString(email), password));
+        when(userRepository.save(any(User.class))).thenReturn(new User(1L, name, Email.fromString(email), password));
 
         // Act
         User result = signupUserUseCase.execute(params);
@@ -55,7 +55,7 @@ public class SignupUserUseCaseTest {
         SignupUserCreateDto params = new SignupUserCreateDto(name, email, password);
 
         // Mock the behavior of UserRepository
-        when(userRepository.findByEmail(anyString())).thenReturn(new User(name, Email.fromString(email), password));
+        when(userRepository.findByEmail(anyString())).thenReturn(new User(1L, name, Email.fromString(email), password));
 
         // Act
         signupUserUseCase.execute(params);

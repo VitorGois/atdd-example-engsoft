@@ -1,4 +1,4 @@
-package com.engsoft.atdd.domain.validators;
+package com.engsoft.atdd.application.validators;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

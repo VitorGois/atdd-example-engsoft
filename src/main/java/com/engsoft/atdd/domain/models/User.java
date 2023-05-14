@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import com.engsoft.atdd.domain.models.valueobjects.Email;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,10 +22,18 @@ public class User {
     private String name;
 
 	@Embedded
+    @Column(unique = true)
     private Email email;
 
-	private String password;
+	private String password; // TODO: encrypt password before persist in databse.
 	
+    public User(Long id, String name, Email email, String password) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
 
     public User(String name, Email email, String password) {
         super();
@@ -32,6 +41,8 @@ public class User {
         this.email = email;
         this.password = password;
     }
+
+    public User() { }
 
     public Long getId() {
         return id;
