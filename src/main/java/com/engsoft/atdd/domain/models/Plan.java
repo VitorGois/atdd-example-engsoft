@@ -35,6 +35,8 @@ public class Plan {
         this.description = description;
     }
 
+    public Plan() { }
+
     public Long getId() {
         return id;
     }

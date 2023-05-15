@@ -37,6 +37,8 @@ public class Course {
         this.plan = plan;
     }
 
+    public Course() { }
+
     public Long getId() {
         return id;
     }
