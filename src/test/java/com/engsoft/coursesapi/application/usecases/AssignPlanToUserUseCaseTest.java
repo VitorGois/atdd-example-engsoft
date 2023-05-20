@@ -83,4 +83,3 @@ public class AssignPlanToUserUseCaseTest {
         // NotFoundException should be thrown
     }
 }
-
