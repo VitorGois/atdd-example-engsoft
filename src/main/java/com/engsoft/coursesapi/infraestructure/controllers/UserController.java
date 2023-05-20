@@ -43,7 +43,7 @@ public class UserController {
             List<User> users = listUsersUseCase.execute(params);
             
             List<UserDto> userDtos = users.stream()
-                .map(user -> new UserDto(user.getId(), user.getName(), user.getEmail().getValue()))
+                .map(user -> new UserDto(user.getId(), user.getName(), user.getEmail().getValue(),user.getPlan()))
                 .collect(Collectors.toList());
     
             return ResponseEntity.ok(userDtos);
