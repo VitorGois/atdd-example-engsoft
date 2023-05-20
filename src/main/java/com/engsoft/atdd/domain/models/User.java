@@ -1,6 +1,7 @@
 package com.engsoft.atdd.domain.models;
 
 import com.engsoft.atdd.domain.models.valueobjects.Email;
+import com.engsoft.atdd.domain.models.valueobjects.Password;
 import com.engsoft.atdd.domain.models.valueobjects.TaxId;
 
 import jakarta.persistence.Column;
@@ -30,13 +31,15 @@ public class User {
     @Column(unique = true)
     private TaxId taxId;
 
-	private String password; // TODO: encrypt password before persist in databse.
+    @Embedded
+    @Column(unique = true)
+	private Password password;
 
     @ManyToOne
     @JoinColumn(name = "plan_id")
     private Plan plan;
 	
-    public User(Long id, String name, Email email, TaxId taxId, String password) {
+    public User(Long id, String name, Email email, TaxId taxId, Password password) {
         super();
         this.id = id;
         this.name = name;
@@ -45,7 +48,7 @@ public class User {
         this.password = password;
     }
 
-    public User(String name, Email email, TaxId taxId, String password) {
+    public User(String name, Email email, TaxId taxId, Password password) {
         super();
         this.name = name;
         this.email = email;
@@ -83,11 +86,11 @@ public class User {
         this.taxId = taxId;
     }
     
-    public String getPassword() {
+    public Password getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(Password password) {
         this.password = password;
     }
 

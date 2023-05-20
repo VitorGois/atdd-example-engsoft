@@ -13,6 +13,7 @@ import static org.mockito.Mockito.when;
 
 import com.engsoft.atdd.domain.models.User;
 import com.engsoft.atdd.domain.models.valueobjects.Email;
+import com.engsoft.atdd.domain.models.valueobjects.Password;
 import com.engsoft.atdd.domain.models.valueobjects.TaxId;
 import com.engsoft.atdd.infraestructure.controllers.dtos.SignupUserCreateDto;
 import com.engsoft.atdd.infraestructure.exceptions.BadRequestException;
@@ -38,8 +39,9 @@ public class SignupUserUseCaseTest {
         SignupUserCreateDto params = new SignupUserCreateDto(name, email, taxId, password);
 
         // Mock the behavior of UserRepository
-        when(userRepository.findByEmailOrTaxId(anyString(), anyString())).thenReturn(null);
-        when(userRepository.save(any(User.class))).thenReturn(new User(1L, name, Email.fromString(email), TaxId.fromString(taxId), password));
+        when(userRepository.findByEmail(anyString())).thenReturn(null);
+        when(userRepository.save(any(User.class)))
+            .thenReturn(new User(1L, name, Email.fromString(email), TaxId.fromString(taxId), Password.fromString(password)));
 
         // Act
         User result = signupUserUseCase.execute(params);
@@ -58,7 +60,8 @@ public class SignupUserUseCaseTest {
         SignupUserCreateDto params = new SignupUserCreateDto(name, email, taxId, password);
 
         // Mock the behavior of UserRepository
-        when(userRepository.findByEmailOrTaxId(anyString(), anyString())).thenReturn(new User(1L, name, Email.fromString(email), TaxId.fromString(taxId), password));
+        when(userRepository.findByEmail(anyString()))
+            .thenReturn(new User(1L, name, Email.fromString(email), TaxId.fromString(taxId), Password.fromString(password)));
 
         // Act
         signupUserUseCase.execute(params);
