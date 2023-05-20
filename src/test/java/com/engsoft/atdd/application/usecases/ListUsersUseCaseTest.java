@@ -14,6 +14,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.engsoft.atdd.domain.models.User;
 import com.engsoft.atdd.domain.models.valueobjects.Email;
+import com.engsoft.atdd.domain.models.valueobjects.TaxId;
 import com.engsoft.atdd.infraestructure.controllers.dtos.ListUsersReadDto;
 import com.engsoft.atdd.infraestructure.repositories.UserRepository;
 
@@ -33,8 +34,8 @@ public class ListUsersUseCaseTest {
 
         // Dados de saída simulados
         List<User> expectedUsers = Arrays.asList(
-            new User(1L, "John Doe", Email.fromString("john@example.com"), null),
-            new User(2L, "John Smith", Email.fromString("john@example.com"), null)
+            new User(1L, "John Doe", Email.fromString("john@example.com"), TaxId.fromString("123.456.789-00"), null),
+            new User(2L, "John Smith", Email.fromString("john@example.com"), TaxId.fromString("123.456.789-00"), null)
         );
 
         // Configuração do comportamento simulado do UserRepository
@@ -54,9 +55,9 @@ public class ListUsersUseCaseTest {
 
         // Dados de saída simulados
         List<User> expectedUsers = Arrays.asList(
-                new User(1L, "John Doe", Email.fromString("john@example.com"), null),
-                new User(2L, "Jane Smith", Email.fromString("jane@example.com"), null),
-                new User(3L, "Bob Johnson", Email.fromString("bob@example.com"), null)
+                new User(1L, "John Doe", Email.fromString("john@example.com"), TaxId.fromString("123.456.789-00"), null),
+                new User(2L, "Jane Smith", Email.fromString("jane@example.com"), TaxId.fromString("123.456.789-00"), null),
+                new User(3L, "Bob Johnson", Email.fromString("bob@example.com"), TaxId.fromString("123.456.789-00"), null)
         );
 
         // Configuração do comportamento simulado do UserRepository

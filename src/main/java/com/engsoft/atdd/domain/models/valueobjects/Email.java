@@ -33,7 +33,7 @@ public class Email {
     private static void validate(String email) {
         Matcher matcher = EMAIL_PATTERN.matcher(email);
         if (!matcher.matches()) {
-            throw new IllegalArgumentException("formato de e-mail inválido");
+            throw new IllegalArgumentException("invalid email format");
         }
     }
 	

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.engsoft.atdd.application.usecases.SignupUserUseCase;
 import com.engsoft.atdd.infraestructure.controllers.dtos.SignupUserCreateDto;
 import com.engsoft.atdd.infraestructure.exceptions.BadRequestException;
-import com.engsoft.atdd.infraestructure.exceptions.EmailAlreadyExistsException;
+import com.engsoft.atdd.infraestructure.exceptions.UserAlreadyExistsException;
 
 
 @RestController
@@ -28,7 +28,7 @@ public class SignupController {
 		try {
 			signupUserUseCase.execute(body);
 			return ResponseEntity.status(HttpStatus.CREATED).body(null);
-		} catch (EmailAlreadyExistsException e) {
+		} catch (UserAlreadyExistsException e) {
 			return ResponseEntity.status(HttpStatus.CONFLICT).body("Email already exists");
 		} catch (BadRequestException e) {
 			return ResponseEntity.badRequest().body("Bad request: " + e.getMessage());

@@ -13,9 +13,10 @@ import static org.mockito.Mockito.when;
 
 import com.engsoft.atdd.domain.models.User;
 import com.engsoft.atdd.domain.models.valueobjects.Email;
+import com.engsoft.atdd.domain.models.valueobjects.TaxId;
 import com.engsoft.atdd.infraestructure.controllers.dtos.SignupUserCreateDto;
 import com.engsoft.atdd.infraestructure.exceptions.BadRequestException;
-import com.engsoft.atdd.infraestructure.exceptions.EmailAlreadyExistsException;
+import com.engsoft.atdd.infraestructure.exceptions.UserAlreadyExistsException;
 import com.engsoft.atdd.infraestructure.repositories.UserRepository;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -32,12 +33,13 @@ public class SignupUserUseCaseTest {
         // Arrange
         String name = "name";
         String email = "test@example.com";
+        String taxId = "123.456.789-00";
         String password = "sTrongPwd123@";
-        SignupUserCreateDto params = new SignupUserCreateDto(name, email, password);
+        SignupUserCreateDto params = new SignupUserCreateDto(name, email, taxId, password);
 
         // Mock the behavior of UserRepository
-        when(userRepository.findByEmail(anyString())).thenReturn(null);
-        when(userRepository.save(any(User.class))).thenReturn(new User(1L, name, Email.fromString(email), password));
+        when(userRepository.findByEmailOrTaxId(anyString(), anyString())).thenReturn(null);
+        when(userRepository.save(any(User.class))).thenReturn(new User(1L, name, Email.fromString(email), TaxId.fromString(taxId), password));
 
         // Act
         User result = signupUserUseCase.execute(params);
@@ -46,16 +48,17 @@ public class SignupUserUseCaseTest {
         assertNotNull(result);
     }
 
-    @Test(expected = EmailAlreadyExistsException.class)
+    @Test(expected = UserAlreadyExistsException.class)
     public void testExecute_EmailAlreadyExists() throws Exception {
         // Arrange
         String name = "name";
         String email = "test@example.com";
+        String taxId = "123.456.789-00";
         String password = "sTrongPwd123@";
-        SignupUserCreateDto params = new SignupUserCreateDto(name, email, password);
+        SignupUserCreateDto params = new SignupUserCreateDto(name, email, taxId, password);
 
         // Mock the behavior of UserRepository
-        when(userRepository.findByEmail(anyString())).thenReturn(new User(1L, name, Email.fromString(email), password));
+        when(userRepository.findByEmailOrTaxId(anyString(), anyString())).thenReturn(new User(1L, name, Email.fromString(email), TaxId.fromString(taxId), password));
 
         // Act
         signupUserUseCase.execute(params);
@@ -68,8 +71,9 @@ public class SignupUserUseCaseTest {
         // Arrange
         String name = "name";
         String email = "test@example.com";
+        String taxId = "123.456.789-00";
         String password = "password";
-        SignupUserCreateDto params = new SignupUserCreateDto(name, email, password);
+        SignupUserCreateDto params = new SignupUserCreateDto(name, email, taxId, password);
 
         // Act
         signupUserUseCase.execute(params);

@@ -34,7 +34,7 @@ public class AssignPlanToUserUseCaseTest {
         // Arrange
         Long userId = 1L;
         Long planId = 1L;
-        User user = new User(userId, null, null, null);
+        User user = new User(userId, null, null, null, null);
         Plan plan = new Plan(planId, null, null);
 
         Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
@@ -71,7 +71,7 @@ public class AssignPlanToUserUseCaseTest {
         // Arrange
         Long userId = 1L;
         Long planId = 1L;
-        User user = new User(userId, null, null, null);
+        User user = new User(userId, null, null, null, null);
 
         Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         Mockito.when(planRepository.findById(planId)).thenReturn(Optional.empty());
