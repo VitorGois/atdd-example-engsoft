@@ -7,9 +7,15 @@ pipeline {
     }
     
     stages {       
+        stage('Instalar Maven') {
+            steps {
+                tool name: 'Maven_3.9.2', type: 'maven'
+            }
+        }
+
         stage('Build') {
             steps {
-                sh 'mvn clean package'
+                sh "'${tool 'Maven_3.9.2'}/bin/mvn' clean package"
             }
         }
     }
