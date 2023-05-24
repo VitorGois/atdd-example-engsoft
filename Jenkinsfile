@@ -40,7 +40,7 @@ pipeline {
         stage("Docker Build and Push") {
             steps {
                 bat "docker build -t vitorgois/${DOCKER_IMAGE}:${DOCKER_TAG} ."
-                bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
                 bat "docker push vitorgois/${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
