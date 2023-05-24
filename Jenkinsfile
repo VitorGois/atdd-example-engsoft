@@ -37,12 +37,14 @@ pipeline {
             }
         }
 
-        stage("Docker Build and Push") {
+        stage('Build and Push Image') {
             steps {
-                bat "docker build -t vitorgois/${DOCKER_IMAGE}:${DOCKER_TAG} ."
-                bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-                bat "sleep 15"
-                bat "docker push vitorgois/${DOCKER_IMAGE}:${DOCKER_TAG}"
+                script {
+                    def dockerImage = docker.build("$DOCKER_IMAGE:$DOCKER_TAG", "-f Dockerfile .")
+                    docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
+                        dockerImage.push()
+                    }
+                }
             }
         }
 
