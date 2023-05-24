@@ -5,7 +5,6 @@ pipeline {
         APP_PORT = 8080
         DOCKER_IMAGE = "coursesapi"
         DOCKER_TAG = "latest"
-        DOCKERHUB_CREDENTIALS = credentials("dockerhub")
     }
 
     tools {
@@ -41,7 +40,7 @@ pipeline {
             steps {
                 script {
                     def dockerImage = docker.build("$DOCKER_IMAGE:$DOCKER_TAG", "-f Dockerfile .")
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
+                    docker.withRegistry('https://registry.hub.docker.com', "dockerhub-credentials") {
                         dockerImage.push()
                     }
                 }
