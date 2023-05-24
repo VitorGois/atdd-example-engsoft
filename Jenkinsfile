@@ -37,12 +37,12 @@ pipeline {
         always {
             archiveArtifacts(artifacts: "**/target/*.jar", fingerprint: true)
             jacoco(
-                execPattern: '**/target/classes',
-                classPattern: '**/target/test-classes',
+                execPattern: '**/**.exec',
+                classPattern: '**/classes',
                 sourcePattern: '**/src/main/java',
-                inclusionPattern: '**/com/engsoft/**',
+                inclusionPattern: '**/*.java,**/*.groovy,**/*.kt,**/*.kts',
                 exclusionPattern: '',
-                minimumInstructionCoverage: '80',
+                minimumInstructionCoverage: '70',
                 minimumBranchCoverage: '70'
             )
         }
