@@ -27,7 +27,13 @@ pipeline {
 
         stage("Build Docker Image") {
             steps {
-                bat "docker build -t vitorgois/coursesapi:latest -f ."
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
+                        def imageName = "vitorgois/coursesapi:latest"
+                        def dockerfileDir = '.'
+                        docker.build(imageName, dockerfileDir)
+                    }
+                }
             }
         }
 
