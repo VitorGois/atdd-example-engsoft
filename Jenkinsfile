@@ -1,28 +1,54 @@
 pipeline {
     agent any
 
+    environment {
+        DOCKER_IMAGE = "coursesapi"
+        DOCKER_TAG = "latest"
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+    }
+
     tools {
-        maven 'maven-3.9.2'
-        jdk 'jdk-17'
+        maven "maven-3.9.2"
+        jdk "jdk-17"
     }
 
     stages {
-        stage('Checkout') {
+        stage("Checkout") {
             steps {
                 checkout scm
             }
         }
 
-        stage('Build') {
+        stage("Build") {
             steps {
-                bat 'mvn -B clean package'
+                bat "mvn -B clean package"
             }
         }
+
+        stage("Build Docker Image") {
+            steps {
+                bat "docker build -t ${DOCKERHUB_CREDENTIALS_USR}/${DOCKER_IMAGE}:${DOCKER_TAG} -f ."
+            }
+        }
+
+        stage("Docker Registry Login") {
+            steps {
+                bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+            }
+        }
+
+        stage("Push Docker Image") {
+            steps {
+                bat "docker push ${DOCKERHUB_CREDENTIALS_USR}/${DOCKER_IMAGE}:${DOCKER_TAG}"
+            }
+        }
+
     }
 
     post {
         always {
-            archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true)
+            archiveArtifacts(artifacts: "**/target/*.jar", fingerprint: true)
+            bat "docker logout"
         }
     }
 }
