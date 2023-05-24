@@ -116,20 +116,6 @@
 			</plugin>
 
 			<plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.7.0.1746</version>
-				<executions>
-					<execution>
-						<phase>verify</phase>
-						<goals>
-							<goal>sonar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<plugin>
         		<artifactId>maven-site-plugin</artifactId>
         		<version>3.7.1</version>
       		</plugin>
