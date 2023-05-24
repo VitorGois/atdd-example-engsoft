@@ -42,10 +42,8 @@ pipeline {
                 sourcePattern: '**/src/main/java',
                 inclusionPattern: '**/com/engsoft/**',
                 exclusionPattern: '',
-                minimumInstructionCoverage: 80,
-                maximumInstructionCoverage: 100,
-                minimumBranchCoverage: 70,
-                maximumBranchCoverage: 100
+                minimumInstructionCoverage: '80',
+                minimumBranchCoverage: '70'
             )
         }
     }
