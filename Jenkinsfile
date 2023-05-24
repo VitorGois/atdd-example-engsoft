@@ -36,7 +36,17 @@ pipeline {
     post {
         always {
             archiveArtifacts(artifacts: "**/target/*.jar", fingerprint: true)
-            jacoco(execPattern: '**/target/classes', classPattern: '**/target/test-classes', sourcePattern: 'src/main/java')
+            jacoco(
+                execPattern: '**/target/classes',
+                classPattern: '**/target/test-classes',
+                sourcePattern: '**/src/main/java',
+                inclusionPattern: '**/com/engsoft/**',
+                exclusionPattern: '',
+                minimumInstructionCoverage: 80,
+                maximumInstructionCoverage: 100,
+                minimumBranchCoverage: 70,
+                maximumBranchCoverage: 100
+            )
         }
     }
 }
