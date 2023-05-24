@@ -26,18 +26,6 @@ pipeline {
             }
         }
 
-        stage("Build and Push Docker Image") {
-            steps {
-                script {
-                    def dockerImage = docker.build("$DOCKER_IMAGE:$DOCKER_TAG", "-f Dockerfile .")
-                    docker.withRegistry("https://registry.hub.docker.com", ${DOCKERHUB_CREDENTIALS}) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-
-
         stage("Verify Tooling") {
             steps {
                 bat """
@@ -46,6 +34,14 @@ pipeline {
                 docker compose version 
                 curl --version
                 """
+            }
+        }
+
+        stage("Docker Build and Push") {
+            steps {
+                bat "docker build -t vitorgois/${DOCKER_IMAGE}:${DOCKER_TAG} ."
+                bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                bat "docker push vitorgois/${DOCKER_IMAGE}:${DOCKER_TAG}"
             }
         }
 
@@ -81,6 +77,7 @@ pipeline {
                 minimumInstructionCoverage: "70",
                 minimumBranchCoverage: "70"
             )
+            bat "docker logout"
         }
     }
 }
