@@ -1,15 +1,16 @@
 package com.engsoft.coursesapi.application.usecases;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.util.Optional;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.engsoft.coursesapi.domain.models.Plan;
 import com.engsoft.coursesapi.domain.models.User;
@@ -17,7 +18,8 @@ import com.engsoft.coursesapi.infraestructure.exceptions.NotFoundException;
 import com.engsoft.coursesapi.infraestructure.repositories.PlanRepository;
 import com.engsoft.coursesapi.infraestructure.repositories.UserRepository;
 
-@RunWith(MockitoJUnitRunner.class)
+
+@ExtendWith(MockitoExtension.class)
 public class AssignPlanToUserUseCaseTest {
 
     @Mock
@@ -51,7 +53,7 @@ public class AssignPlanToUserUseCaseTest {
         assertEquals(plan, user.getPlan());
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void testExecute_WhenUserNotFound_ShouldThrowNotFoundException() throws Exception {
         // Arrange
         Long userId = 1L;
@@ -59,14 +61,13 @@ public class AssignPlanToUserUseCaseTest {
 
         Mockito.when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        // Act
-        assignPlanToUserUseCase.execute(userId, planId);
-
-        // Assert
-        // NotFoundException should be thrown
+        // Act & Assert
+        assertThrows(NotFoundException.class, () -> {
+            assignPlanToUserUseCase.execute(userId, planId);
+        });
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void testExecute_WhenPlanNotFound_ShouldThrowNotFoundException() throws Exception {
         // Arrange
         Long userId = 1L;
@@ -76,10 +77,9 @@ public class AssignPlanToUserUseCaseTest {
         Mockito.when(userRepository.findById(userId)).thenReturn(Optional.of(user));
         Mockito.when(planRepository.findById(planId)).thenReturn(Optional.empty());
 
-        // Act
-        assignPlanToUserUseCase.execute(userId, planId);
-
-        // Assert
-        // NotFoundException should be thrown
+        // Act & Assert
+        assertThrows(NotFoundException.class, () -> {
+            assignPlanToUserUseCase.execute(userId, planId);
+        });
     }
 }

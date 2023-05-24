@@ -1,10 +1,10 @@
 package com.engsoft.coursesapi.application.usecases;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.engsoft.coursesapi.domain.models.User;
 import com.engsoft.coursesapi.domain.models.valueobjects.Email;
@@ -16,11 +16,12 @@ import com.engsoft.coursesapi.infraestructure.exceptions.UserAlreadyExistsExcept
 import com.engsoft.coursesapi.infraestructure.repositories.UserRepository;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class SignupUserUseCaseTest {
 
     @Mock
@@ -50,7 +51,7 @@ public class SignupUserUseCaseTest {
         assertNotNull(result);
     }
 
-    @Test(expected = UserAlreadyExistsException.class)
+    @Test
     public void testExecute_EmailAlreadyExists() throws Exception {
         // Arrange
         String name = "name";
@@ -63,13 +64,13 @@ public class SignupUserUseCaseTest {
         when(userRepository.findByEmail(anyString()))
             .thenReturn(new User(1L, name, Email.fromString(email), TaxId.fromString(taxId), Password.fromString(password)));
 
-        // Act
-        signupUserUseCase.execute(params);
-
-        // Expect EmailAlreadyExistsException to be thrown
+        // Act & Assert
+        assertThrows(UserAlreadyExistsException.class, () -> {
+            signupUserUseCase.execute(params);
+        });
     }
 
-    @Test(expected = BadRequestException.class)
+    @Test
     public void testExecute_InvalidPassword() throws Exception {
         // Arrange
         String name = "name";
@@ -78,9 +79,9 @@ public class SignupUserUseCaseTest {
         String password = "password";
         SignupUserCreateDto params = new SignupUserCreateDto(name, email, taxId, password);
 
-        // Act
-        signupUserUseCase.execute(params);
-
-        // Expect BadRequestException to be thrown
+        // Act & Assert
+        assertThrows(BadRequestException.class, () -> {
+            signupUserUseCase.execute(params);
+        });
     }
 }
