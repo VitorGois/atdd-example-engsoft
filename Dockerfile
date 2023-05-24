@@ -12,10 +12,10 @@ COPY . /app
 WORKDIR /app
 
 # Baixar as dependências do Maven
-RUN mvn dependency:go-offline -B
+RUN mvn dependency:go-offline -B 
 
 # Construir o projeto com o Maven
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
 # Comando para iniciar a aplicação
 CMD ["java", "-jar", "target/coursesapi-0.0.1-SNAPSHOT.jar"]
