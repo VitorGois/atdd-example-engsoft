@@ -56,8 +56,12 @@ pipeline {
 
         stage("Start container") {
             steps {
-                bat "docker compose up -d --no-color --wait"
-                bat "docker compose ps"
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', "dockerhub-credentials") {
+                        bat "docker compose up -d --no-color --wait"
+                        bat "docker compose ps"
+                    }
+                }
             }
         }
 
