@@ -12,7 +12,7 @@ COPY . /app
 WORKDIR /app
 
 # Baixar as dependências do Maven
-RUN mvn dependency:go-offline -B --offline
+RUN mvn dependency:go-offline -B
 
 # Construir o projeto com o Maven
 RUN mvn clean package -DskipTests
