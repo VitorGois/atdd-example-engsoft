@@ -42,7 +42,7 @@ pipeline {
     post {
         always {
             archiveArtifacts(artifacts: "**/target/*.jar", fingerprint: true)
-            jacoco(reportBuildPolicy: 'always', execPattern: '**/target/jacoco.exec')
+            jacoco(execPattern: '**/target/classes', classPattern: '**/target/test-classes', sourcePattern: 'src/main/java')
         }
     }
 }
