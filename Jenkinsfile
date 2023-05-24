@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         APP_PORT = 8080
+        DOCKER_USERNAME = "vitorgois"
         DOCKER_IMAGE = "coursesapi"
         DOCKER_TAG = "latest"
     }
@@ -39,7 +40,7 @@ pipeline {
         stage('Build and Push Image') {
             steps {
                 script {
-                    def dockerImage = docker.build("$DOCKER_IMAGE:$DOCKER_TAG", "-f Dockerfile .")
+                    def dockerImage = docker.build("${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}", "-f Dockerfile .")
                     docker.withRegistry('https://registry.hub.docker.com', "dockerhub-credentials") {
                         dockerImage.push()
                     }
