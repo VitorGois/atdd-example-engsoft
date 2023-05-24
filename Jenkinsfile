@@ -28,12 +28,7 @@ pipeline {
         stage("Build Docker Image") {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerhub-credentials') {
-                        def imageName = "vitorgois/coursesapi:latest"
-                        def dockerfileDir = '.'
-                        docker.build(imageName, dockerfileDir)
-                    }
-                }
+                    bat "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} -f Dockerfile ."
             }
         }
 
