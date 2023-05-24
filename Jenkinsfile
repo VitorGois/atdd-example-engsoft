@@ -1,6 +1,4 @@
 pipeline {
-    @Library(['docker']) _
-
     agent any
 
     environment {
