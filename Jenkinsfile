@@ -19,21 +19,15 @@ pipeline {
             }
         }
 
-        stage("Build") {
+        stage("Build and Test") {
             steps {
-                bat "mvn -B clean package -DskipTests"
+                bat "mvn -B clean package"
             }
         }
 
         stage("Build Docker Image") {
             steps {
                 bat "docker build -t ${DOCKER_IMAGE}:${DOCKER_TAG} -f Dockerfile ."
-            }
-        }
-
-        stage('Run Tests') {
-            steps {
-                bat 'mvn clean test'
             }
         }
 
