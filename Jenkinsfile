@@ -31,15 +31,9 @@ pipeline {
             }
         }
 
-        stage("Docker Registry Login") {
+        stage('Run Tests') {
             steps {
-                bat "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
-            }
-        }
-
-        stage("Push Docker Image") {
-            steps {
-                bat "docker push vitorgois/coursesapi:latest"
+                sh 'mvn clean test'
             }
         }
 
@@ -48,7 +42,7 @@ pipeline {
     post {
         always {
             archiveArtifacts(artifacts: "**/target/*.jar", fingerprint: true)
-            bat "docker logout"
+            jacoco(reportBuildPolicy: 'always', execPattern: '**/target/jacoco.exec')
         }
     }
 }
