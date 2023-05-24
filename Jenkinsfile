@@ -27,7 +27,7 @@ pipeline {
 
         stage("Build Docker Image") {
             steps {
-                bat "docker build -t ${DOCKERHUB_CREDENTIALS_USR}/${DOCKER_IMAGE}:${DOCKER_TAG} -f ."
+                bat "docker build -t vitorgois/coursesapi:latest -f ."
             }
         }
 
@@ -39,7 +39,7 @@ pipeline {
 
         stage("Push Docker Image") {
             steps {
-                bat "docker push ${DOCKERHUB_CREDENTIALS_USR}/${DOCKER_IMAGE}:${DOCKER_TAG}"
+                bat "docker push vitorgois/coursesapi:latest"
             }
         }
 
