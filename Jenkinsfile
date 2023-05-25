@@ -37,11 +37,11 @@ pipeline {
             }
         }
 
-        stage('Build and Push Image') {
+        stage("Build and Push Image") {
             steps {
                 script {
                     def dockerImage = docker.build("${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}", "-f Dockerfile .")
-                    docker.withRegistry('https://registry.hub.docker.com', "dockerhub-credentials") {
+                    docker.withRegistry("https://registry.hub.docker.com", "dockerhub-credentials") {
                         dockerImage.push()
                     }
                 }
@@ -57,7 +57,7 @@ pipeline {
         stage("Start container") {
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', "dockerhub-credentials") {
+                    docker.withRegistry("https://registry.hub.docker.com", "dockerhub-credentials") {
                         bat "docker compose up -d --no-color --wait"
                         bat "docker compose ps"
                     }
@@ -67,6 +67,7 @@ pipeline {
 
         stage("Run tests against the container") {
             steps {
+                bat "sleep 15"
                 bat "curl http://localhost:${APP_PORT}/health"
             }
         }
