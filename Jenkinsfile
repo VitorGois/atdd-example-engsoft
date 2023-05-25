@@ -67,7 +67,6 @@ pipeline {
 
         stage("Run tests against the container") {
             steps {
-                bat "timeout /T 10"
                 bat "curl http://localhost:${APP_PORT}/health"
             }
         }
