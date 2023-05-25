@@ -67,7 +67,7 @@ pipeline {
 
         stage("Run tests against the container") {
             steps {
-                bat "curl http://localhost:${APP_PORT}"
+                bat "curl http://localhost:${APP_PORT}/health"
             }
         }
     }
