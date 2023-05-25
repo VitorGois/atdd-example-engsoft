@@ -19,6 +19,7 @@
 
 	<properties>
 		<java.version>17</java.version>
+		<start-class>com.engsoft.coursesapi.CoursesApiApplication</start-class>
 	</properties>
 
 	<dependencies>
@@ -108,6 +109,22 @@
                     </execution>
                 </executions>
             </plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.engsoft.coursesapi.CoursesApiApplication</mainClass>
+					<layout>JAR</layout>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 
             <plugin>
 				<artifactId>maven-site-plugin</artifactId>
