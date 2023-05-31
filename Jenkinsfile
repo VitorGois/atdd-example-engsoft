@@ -60,12 +60,12 @@ pipeline {
         }
 
         stage("Build and Push Image") {
-                when {
-                    expression {
-                        // Verificar se a cobertura está acima de 70%
-                        env.COVERAGE_PERCENTAGE.toFloat() > 70.0
-                    }
+            when {
+                expression {
+                    // Verificar se a cobertura está acima de 70%
+                    env.COVERAGE_PERCENTAGE.toFloat() > 70.0
                 }
+            }
             steps {
                 script {
                     def dockerImage = docker.build("${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}", "-f Dockerfile .")
