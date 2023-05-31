@@ -29,6 +29,9 @@ pipeline {
 
         stage('Jacoco') {
             steps {              
+                // Executar testes com cobertura usando Jacoco
+                sh 'mvn clean test'
+
                 // Gerar relatório de cobertura Jacoco
                 sh 'mvn jacoco:report'
                 
