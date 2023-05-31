@@ -1,3 +1,6 @@
+// Permitir declaração de DOCTYPE no parser XML
+System.setProperty("javax.xml.accessExternalDTD", "all")
+
 pipeline {
     agent any
 
