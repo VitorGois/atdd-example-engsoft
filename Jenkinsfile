@@ -28,23 +28,22 @@ pipeline {
         }
 
         stage('Jacoco') {
-            steps {
-                // Executar testes com cobertura usando Jacoco
-                sh 'mvn clean test'
-                
+            steps {              
                 // Gerar relatório de cobertura Jacoco
                 sh 'mvn jacoco:report'
                 
-                // Extrair porcentagem de cobertura do relatório XML
-                def coverageReport = readFile('target/site/jacoco/jacoco.xml')
-                def coverageXml = new XmlSlurper().parseText(coverageReport)
-                def coveragePercentage = coverageXml.'counter'.'@covered'.toInteger() / coverageXml.'counter'.'@missed'.toInteger()
-                
-                // Armazenar a porcentagem de cobertura como uma variável de ambiente
-                env.COVERAGE_PERCENTAGE = coveragePercentage.toString()
-                
-                // Exibir a porcentagem de cobertura
-                echo "Porcentagem de Cobertura: ${env.COVERAGE_PERCENTAGE}%"
+                script {
+                    // Extrair porcentagem de cobertura do relatório XML
+                    def coverageReport = readFile('target/site/jacoco/jacoco.xml')
+                    def coverageXml = new XmlSlurper().parseText(coverageReport)
+                    def coveragePercentage = coverageXml.'counter'.'@covered'.toInteger() / coverageXml.'counter'.'@missed'.toInteger()
+                    
+                    // Armazenar a porcentagem de cobertura como uma variável de ambiente
+                    env.COVERAGE_PERCENTAGE = coveragePercentage.toString()
+                    
+                    // Exibir a porcentagem de cobertura
+                    echo "Porcentagem de Cobertura: ${env.COVERAGE_PERCENTAGE}%"
+                }
             }
         }
 
