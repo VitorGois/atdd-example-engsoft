@@ -6,6 +6,7 @@ pipeline {
         DOCKER_USERNAME = "vitorgois"
         DOCKER_IMAGE = "coursesapi"
         DOCKER_TAG = "latest"
+        COVERAGE_PERCENTAGE = ''
     }
 
     tools {
@@ -26,6 +27,27 @@ pipeline {
             }
         }
 
+        stage('Jacoco') {
+            steps {
+                // Executar testes com cobertura usando Jacoco
+                sh 'mvn clean test'
+                
+                // Gerar relatório de cobertura Jacoco
+                sh 'mvn jacoco:report'
+                
+                // Extrair porcentagem de cobertura do relatório XML
+                def coverageReport = readFile('target/site/jacoco/jacoco.xml')
+                def coverageXml = new XmlSlurper().parseText(coverageReport)
+                def coveragePercentage = coverageXml.'counter'.'@covered'.toInteger() / coverageXml.'counter'.'@missed'.toInteger()
+                
+                // Armazenar a porcentagem de cobertura como uma variável de ambiente
+                env.COVERAGE_PERCENTAGE = coveragePercentage.toString()
+                
+                // Exibir a porcentagem de cobertura
+                echo "Porcentagem de Cobertura: ${env.COVERAGE_PERCENTAGE}%"
+            }
+        }
+
         stage("Verify Tooling") {
             steps {
                 bat """
@@ -38,6 +60,12 @@ pipeline {
         }
 
         stage("Build and Push Image") {
+                when {
+                    expression {
+                        // Verificar se a cobertura está acima de 70%
+                        env.COVERAGE_PERCENTAGE.toFloat() > 70.0
+                    }
+                }
             steps {
                 script {
                     def dockerImage = docker.build("${DOCKER_USERNAME}/${DOCKER_IMAGE}:${DOCKER_TAG}", "-f Dockerfile .")
