@@ -14,6 +14,10 @@ pipeline {
         jdk "jdk-17"
     }
 
+    options {
+        disableXmlExternalEntities()
+    }
+
     stages {
         stage("Checkout") {
             steps {
