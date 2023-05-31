@@ -6,7 +6,7 @@ pipeline {
         DOCKER_USERNAME = "vitorgois"
         DOCKER_IMAGE = "coursesapi"
         DOCKER_TAG = "latest"
-        COVERAGE_PERCENTAGE = ''
+        COVERAGE_PERCENTAGE = ""
     }
 
     tools {
@@ -27,19 +27,19 @@ pipeline {
             }
         }
 
-        stage('Jacoco') {
+        stage("Jacoco") {
             steps {              
                 // Executar testes com cobertura usando Jacoco
-                bat 'mvn clean test'
+                bat "mvn clean test"
 
                 // Gerar relatório de cobertura Jacoco
-                bat 'mvn jacoco:report'
+                bat "mvn jacoco:report"
                 
                 script {
                     // Extrair porcentagem de cobertura do relatório XML
-                    def coverageReport = readFile('target/site/jacoco/jacoco.xml')
+                    def coverageReport = readFile("target/site/jacoco/jacoco.xml")
                     def coverageXml = new XmlSlurper().parseText(coverageReport)
-                    def coveragePercentage = coverageXml.'counter'.'@covered'.toInteger() / coverageXml.'counter'.'@missed'.toInteger()
+                    def coveragePercentage = coverageXml."counter"."@covered".toInteger() / coverageXml."counter"."@missed".toInteger()
                     
                     // Armazenar a porcentagem de cobertura como uma variável de ambiente
                     env.COVERAGE_PERCENTAGE = coveragePercentage.toString()
