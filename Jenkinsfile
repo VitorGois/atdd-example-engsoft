@@ -28,12 +28,6 @@ pipeline {
         }
 
         stage("Jacoco") {
-            options {
-                jenkinsOptions {
-                    disableXmlExternalEntities()
-                }
-            }
-
             steps {              
                 // Executar testes com cobertura usando Jacoco
                 bat "mvn clean test"
