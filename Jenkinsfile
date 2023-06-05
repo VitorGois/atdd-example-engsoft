@@ -35,10 +35,10 @@ pipeline {
 
     post {
         always {
-            discordSend channel: '#Servidor-Jenkins', color: 'GREEN', message: 'O pipeline foi concluído com sucesso!', webhookURL: "https://discord.com/api/webhooks/1115073082034503761/SUpJ55vXiGZYrzTXZq4ZKPpYOw5E21jZv3IGY3QdNHmKMOXxlnCopoaLJIoL0BsLNsyO"
+            discordSend description: 'O pipeline foi concluído com sucesso!', link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1115073082034503761/SUpJ55vXiGZYrzTXZq4ZKPpYOw5E21jZv3IGY3QdNHmKMOXxlnCopoaLJIoL0BsLNsyO"
         }
         failure {
-            discordSend channel: '#Servidor-Jenkins', color: 'RED', message: 'O pipeline falhou!', webhookURL: "https://discord.com/api/webhooks/1115073082034503761/SUpJ55vXiGZYrzTXZq4ZKPpYOw5E21jZv3IGY3QdNHmKMOXxlnCopoaLJIoL0BsLNsyO"
+            discordSend description: 'O pipeline falhou!', link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1115073082034503761/SUpJ55vXiGZYrzTXZq4ZKPpYOw5E21jZv3IGY3QdNHmKMOXxlnCopoaLJIoL0BsLNsyO"
         }
     }
   
