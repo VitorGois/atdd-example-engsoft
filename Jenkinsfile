@@ -35,10 +35,7 @@ pipeline {
 
     post {
         always {
-            discordSend description: 'O pipeline foi concluído com sucesso!', link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1115073082034503761/SUpJ55vXiGZYrzTXZq4ZKPpYOw5E21jZv3IGY3QdNHmKMOXxlnCopoaLJIoL0BsLNsyO"
-        }
-        failure {
-            discordSend description: 'O pipeline falhou!', link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1115073082034503761/SUpJ55vXiGZYrzTXZq4ZKPpYOw5E21jZv3IGY3QdNHmKMOXxlnCopoaLJIoL0BsLNsyO"
+            discordSend description: 'Status do pipeline: ${currentBuild.currentResult}', link: env.BUILD_URL, result: currentBuild.currentResult, title: JOB_NAME, webhookURL: "https://discord.com/api/webhooks/1115073082034503761/SUpJ55vXiGZYrzTXZq4ZKPpYOw5E21jZv3IGY3QdNHmKMOXxlnCopoaLJIoL0BsLNsyO"
         }
     }
   
