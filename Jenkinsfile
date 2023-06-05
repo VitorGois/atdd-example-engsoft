@@ -4,12 +4,12 @@ pipeline {
     stages {
         stage("verify tooling") {
             steps {
-                bat "
+                bat """
                 docker version
                 docker info
                 docker compose version 
                 curl --version
-                "
+                """
             }
         }
 
