@@ -14,5 +14,4 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM User u WHERE (:nameFilter IS NULL OR u.name = :nameFilter) AND (:emailFilter IS NULL OR u.email.value = :emailFilter)")
     List<User> findByFilter(@Param("nameFilter") String nameFilter, @Param("emailFilter") String emailFilter);
-
 }
